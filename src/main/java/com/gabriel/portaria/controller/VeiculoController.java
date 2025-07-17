@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,16 +17,31 @@ import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai ser // http//:localhost/veiculos
+@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai ser http//:localhost/veiculos
 
 public class VeiculoController {
 
     @Autowired
     private VeiculoRepository veiculoRepository;
 
+    @GetMapping("/teste")
+    public String teste() {
+        System.out.println(">>> chegou no /veiculos/teste");
+        return "rota funcionando";
+    }
+
     @GetMapping
     public List<Veiculo> lestarCarros() {
         return veiculoRepository.findAll();
+    }
+
+    @GetMapping("/placa/{placa}") // http://localhost:8080/veiculos/placa/
+    public ResponseEntity<?> buscarPlaca(@PathVariable String placa) {
+        Veiculo veiculo = veiculoRepository.findByPlaca(placa);
+        if (veiculo == null) {
+            return ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado"));
+        }
+        return ResponseEntity.ok(veiculo);
     }
 
     @PostMapping
@@ -39,13 +55,17 @@ public class VeiculoController {
         return ResponseEntity.ok(salvo);
     }
 
-    @GetMapping("/placa/{placa}") // http://localhost:8080/veiculos/placa/
-    public ResponseEntity<?> buscarPlaca(@PathVariable String placa) {
-        Veiculo veiculo = veiculoRepository.findByPlaca(placa);
-        if (veiculo == null) {
-            return ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado"));
-        }
-        return ResponseEntity.ok(veiculo);
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizarCarro(@PathVariable Long id, @RequestBody Veiculo veiculoDetalhe) {
+
+        return veiculoRepository.findById(id)
+                .<ResponseEntity<?>>map(veiculo -> {
+                    veiculo.setPlaca(veiculoDetalhe.getPlaca());
+                    veiculo.setModelo(veiculoDetalhe.getModelo());
+                    veiculo.setStatus(veiculoDetalhe.getStatus());
+                    Veiculo atualizado = veiculoRepository.save(veiculo);
+                    return ResponseEntity.ok(atualizado);
+                }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
     }
 
 }
