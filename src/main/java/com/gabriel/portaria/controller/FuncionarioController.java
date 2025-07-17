@@ -1,6 +1,5 @@
 package com.gabriel.portaria.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import com.gabriel.portaria.dto.ErroResponse;
 import com.gabriel.portaria.model.Funcionario;
 import com.gabriel.portaria.repository.FuncionarioRepository;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,7 @@ public class FuncionarioController {
     private FuncionarioRepository funcionarioRepository;
 
     @GetMapping("/listar")
-    public List<Funcionario> listarFuncionarios(){
+    public List<Funcionario> listarFuncionarios() {
         return funcionarioRepository.findAll();
     }
 
@@ -57,6 +57,15 @@ public class FuncionarioController {
                 return ResponseEntity.badRequest().body(new ErroResponse("Erro ao atualizar funcionário"));
             }
         }).orElse(ResponseEntity.status(404).body(new ErroResponse("Funcionário não encontrado")));
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
+        if (!funcionarioRepository.existsById(id)) {
+            return ResponseEntity.status(404).body(new ErroResponse("Funcionário com esse ID não foi encontrado"));
+        }
+        funcionarioRepository.deleteById(id);
+        return ResponseEntity.ok(Map.of("message", "Funcionáario deletado com sucesso"));
     }
 
 }
