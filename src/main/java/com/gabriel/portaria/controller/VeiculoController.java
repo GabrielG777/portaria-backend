@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gabriel.portaria.dto.ErroResponse;
+import com.gabriel.portaria.model.StatusVeiculo;
 import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.repository.VeiculoRepository;
 
@@ -74,17 +75,27 @@ public class VeiculoController {
             // veiculo.setStatus(veiculoDetalhe.getStatus());
             // }
 
-            updates.forEach((chave, valor) -> {
-                switch (chave) {
-                    case "placa" -> veiculo.setPlaca((String) valor);
-                    case "modelo" -> veiculo.setModelo((String) valor);
-                    case "status" ->
-                        veiculo.setStatus(com.gabriel.portaria.model.StatusVeiculo.valueOf((String) valor));
-                }
-            });
+            try {
+                updates.forEach((chave, valor) -> {
+                    switch (chave) {
+                        case "placa" -> veiculo.setPlaca((String) valor);
+                        case "modelo" -> veiculo.setModelo((String) valor);
+                        case "status" -> {
+                            StatusVeiculo novoStatus = StatusVeiculo.valueOf((String) valor);
+                            if (veiculo.getStatus() == novoStatus) {
+                                throw new IllegalArgumentException("Status já está definido como " + novoStatus);
+                            }
+                            veiculo.setStatus(novoStatus);
+                        }
+                    }
+                });
 
-            Veiculo atualizado = veiculoRepository.save(veiculo);
-            return ResponseEntity.ok(atualizado);
+                Veiculo atualizado = veiculoRepository.save(veiculo);
+                return ResponseEntity.ok(atualizado);
+
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(new ErroResponse(e.getMessage()));
+            }
         }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
     }
 
