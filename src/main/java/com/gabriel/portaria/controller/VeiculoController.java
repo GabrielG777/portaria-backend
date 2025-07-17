@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,7 @@ import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai ser
-                             // http//:localhost/veiculos
+@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai se http//:localhost/veiculos
 
 public class VeiculoController {
 
@@ -48,9 +48,7 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criarCarro(@RequestBody Veiculo veiculo) { // passeo '?' ao invez de um objeto, para
-                                                                        // conseguir retornar diferentes tipos de
-                                                                        // resposta
+    public ResponseEntity<?> criarCarro(@RequestBody Veiculo veiculo) { // passeo '?' ao invez de um objeto, para conseguir retornar diferentes tipos de resposta
         if (veiculoRepository.existsByPlaca(veiculo.getPlaca())) {
             return ResponseEntity.status(409).body(new ErroResponse("Veículo com placa já cadastrado"));
         }
@@ -99,4 +97,13 @@ public class VeiculoController {
         }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
     }
 
+
+    @DeleteMapping("deletar/{id}")
+    public ResponseEntity<?> deletarCarro(@PathVariable Long id){
+        if (!veiculoRepository.existsById(id)) {
+            return ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado"));
+        }
+        veiculoRepository.deleteById(id);
+        return ResponseEntity.ok(Map.of("message", "Veículo deletado com sucesso"));
+    }
 }
