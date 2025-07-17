@@ -68,4 +68,12 @@ public class RegistroViagem {
     public void setDestino(String destino) {
         this.destino = destino;
     }
+
+    public String getPassageiros() {
+        return passageiros;
+    }
+
+    public void setPassageiros(String passageiros) {
+        this.passageiros = passageiros;
+    }
 }
