@@ -34,8 +34,8 @@ public class FuncionarioController {
 
     @PostMapping("/criar")
     public ResponseEntity<?> criarFuncionario(@RequestBody Funcionario funcionario) {
-        if (funcionarioRepository.existsByCpf(funcionario.getCpf())) {
-            return ResponseEntity.status(409).body(new ErroResponse("Funcionário com esse CPF já existe"));
+        if (funcionarioRepository.existsByCnh(funcionario.getCnh())) {
+            return ResponseEntity.status(409).body(new ErroResponse("Funcionário com essa CNH já existe"));
         }
         return ResponseEntity.ok(funcionarioRepository.save(funcionario));
     }
@@ -48,7 +48,7 @@ public class FuncionarioController {
                     switch (chave) {
                         case "nome" -> funcionario.setNome((String) valor);
                         case "cargo" -> funcionario.setCargo((String) valor);
-                        case "cpf" -> funcionario.setCpf((String) valor);
+                        case "cnh" -> funcionario.setCnh((String) valor);
                     }
                 });
 

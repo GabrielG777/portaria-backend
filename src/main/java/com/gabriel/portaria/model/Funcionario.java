@@ -1,6 +1,9 @@
 package com.gabriel.portaria.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Funcionario {
@@ -11,7 +14,7 @@ public class Funcionario {
 
     private String nome;
     private String cargo;
-    private String cpf;
+    private String cnh;
 
     // Getters e Setters
 
@@ -39,11 +42,11 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCnh() {
+        return cnh;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCnh(String cnh) {
+        this.cnh = cnh;
     }
 }

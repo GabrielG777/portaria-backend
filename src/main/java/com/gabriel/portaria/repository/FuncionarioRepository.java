@@ -6,6 +6,6 @@ import com.gabriel.portaria.model.Funcionario;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
-    boolean existsByCpf(String cpf);
+    boolean existsByCnh(String cnh);
    
 }
