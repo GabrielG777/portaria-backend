@@ -1,6 +1,7 @@
 package com.gabriel.portaria.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,8 @@ import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai ser http//:localhost/veiculos
+@RequestMapping("/veiculos") // nome da minha classe, quando eu for acessar a rota, vai ser
+                             // http//:localhost/veiculos
 
 public class VeiculoController {
 
@@ -45,7 +47,9 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criarCarro(@RequestBody Veiculo veiculo) { // passeo '?' ao invez de um objeto, para conseguir retornar diferentes tipos de resposta
+    public ResponseEntity<?> criarCarro(@RequestBody Veiculo veiculo) { // passeo '?' ao invez de um objeto, para
+                                                                        // conseguir retornar diferentes tipos de
+                                                                        // resposta
         if (veiculoRepository.existsByPlaca(veiculo.getPlaca())) {
             return ResponseEntity.status(409).body(new ErroResponse("Veículo com placa já cadastrado"));
         }
@@ -56,16 +60,32 @@ public class VeiculoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<?> atualizarCarro(@PathVariable Long id, @RequestBody Veiculo veiculoDetalhe) {
+    public ResponseEntity<?> atualizarCarro(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
 
-        return veiculoRepository.findById(id)
-                .<ResponseEntity<?>>map(veiculo -> {
-                    veiculo.setPlaca(veiculoDetalhe.getPlaca());
-                    veiculo.setModelo(veiculoDetalhe.getModelo());
-                    veiculo.setStatus(veiculoDetalhe.getStatus());
-                    Veiculo atualizado = veiculoRepository.save(veiculo);
-                    return ResponseEntity.ok(atualizado);
-                }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
+        return veiculoRepository.findById(id).<ResponseEntity<?>>map(veiculo -> {
+            // if (veiculoDetalhe.getPlaca() != null) {
+            // veiculo.setPlaca(veiculoDetalhe.getPlaca());
+            // }
+            // if (veiculoDetalhe.getModelo() != null) {
+            // veiculo.setModelo(veiculoDetalhe.getModelo()); <- forma que achei que
+            // funcionaria, deixarei salvo para caso de estudo
+            // }
+            // if (veiculoDetalhe.getStatus() != null) {
+            // veiculo.setStatus(veiculoDetalhe.getStatus());
+            // }
+
+            updates.forEach((chave, valor) -> {
+                switch (chave) {
+                    case "placa" -> veiculo.setPlaca((String) valor);
+                    case "modelo" -> veiculo.setModelo((String) valor);
+                    case "status" ->
+                        veiculo.setStatus(com.gabriel.portaria.model.StatusVeiculo.valueOf((String) valor));
+                }
+            });
+
+            Veiculo atualizado = veiculoRepository.save(veiculo);
+            return ResponseEntity.ok(atualizado);
+        }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
     }
 
 }
