@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "1380dded-179d-42a8-a39a-ac5469aa3306",
+		"name": "SPRING-PORTARIA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37186176"
+	},
+	"item": [
+		{
+			"name": "VEICULOS",
+			"item": [
+				{
+					"name": "LISTAR",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/veiculos"
+					},
+					"response": []
+				},
+				{
+					"name": "BUSCAR PLACA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/veiculos/placa/EUA-777"
+					},
+					"response": []
+				},
+				{
+					"name": "INSERT CAR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placa\": \"BRA-1547\",\r\n  \"modelo\": \"Fiat Uno\",\r\n  \"status\": \"NO_PATIO\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/veiculos"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placa\": \"EUA-854\",\r\n    \"modelo\": \"Honda-Civc\",\r\n    \"status\": \"NO_PATIO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/veiculos/atualizar/1"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placa\": \"BRA-1547\",\r\n  \"modelo\": \"Fiat Uno\",\r\n  \"status\": \"NO_PATIO\"\r\n}\r\n"
+						},
+						"url": "{{baseURL}}/veiculos/deletar/4"
+					},
+					"response": []
+				},
+				{
+					"name": "VEICULOS EM VIAGEM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/veiculos?status=EM_VIAGEM",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"veiculos"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "EM_VIAGEM"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VEICULOS NO PATIO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/veiculos?status=NO_PATIO",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"veiculos"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "NO_PATIO"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FUNCIONARIO",
+			"item": [
+				{
+					"name": "LISTAR FUNCIONARIO",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placa\": \"BRA-1547\",\r\n  \"modelo\": \"Fiat Uno\",\r\n  \"status\": \"NO_PATIO\"\r\n}\r\n"
+						},
+						"url": "{{baseURL}}/funcionarios/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "INSERIR FUNCIONARIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Bruno\",\r\n    \"cargo\": \"Desenvolvedor Junior\",\r\n    \"cpf\": \"45878851230\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/funcionarios/criar"
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR FUNCIONARIO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Gabriel Gonçalves Mendonça\",\r\n    \"cargo\": \"Desenvolvedor Junior\",\r\n    \"cpf\": \"46139989809\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/funcionarios/atualizar/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR FUNCIONARIO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placa\": \"BRA-1547\",\r\n  \"modelo\": \"Fiat Uno\",\r\n  \"status\": \"NO_PATIO\"\r\n}\r\n"
+						},
+						"url": "{{baseURL}}/funcionarios/deletar/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REGISTRO",
+			"item": [
+				{
+					"name": "INSERIR REGISTRO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placaVeiculo\": \"EUA-777\",\r\n  \"idMotorista\": 1,\r\n  \"destino\": \"Centro de Distribuição\",\r\n  \"passageiros\": \"João da Silva, Maria Oliveira\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/registro/saida"
+					},
+					"response": []
+				},
+				{
+					"name": "INSERIR RETORNO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placaVeiculo\": \"EUA-777\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/registro/retorno"
+					},
+					"response": []
+				},
+				{
+					"name": "BUSCAR REGISTRO",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"placaVeiculo\": \"EUA-777\",\r\n  \"idMotorista\": 1,\r\n  \"destino\": \"Centro de Distribuição\",\r\n  \"passageiros\": \"João da Silva, Maria Oliveira\"\r\n}\r\n"
+						},
+						"url": "{{baseURL}}/registro/busca"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}

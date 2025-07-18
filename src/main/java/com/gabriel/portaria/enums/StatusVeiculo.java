@@ -1,4 +1,4 @@
-package com.gabriel.portaria.model;
+package com.gabriel.portaria.enums;
 
 // esse cara aqui é um enum, que é uma lista de constantes
 // uso ele para definir os status possíveis de um veículo

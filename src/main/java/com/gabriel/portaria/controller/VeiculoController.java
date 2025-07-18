@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gabriel.portaria.dto.ErroResponse;
-import com.gabriel.portaria.model.StatusVeiculo;
+import com.gabriel.portaria.enums.StatusVeiculo;
 import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.repository.VeiculoRepository;
 
@@ -62,7 +62,7 @@ public class VeiculoController {
             return ResponseEntity.status(409).body(new ErroResponse("Veículo com placa já cadastrado"));
         }
 
-        veiculo.setStatus(com.gabriel.portaria.model.StatusVeiculo.NO_PATIO);
+        veiculo.setStatus(com.gabriel.portaria.enums.StatusVeiculo.NO_PATIO);
         Veiculo salvo = veiculoRepository.save(veiculo);
         return ResponseEntity.ok(salvo);
     }

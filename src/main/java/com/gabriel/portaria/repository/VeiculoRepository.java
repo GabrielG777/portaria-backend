@@ -1,6 +1,6 @@
 package com.gabriel.portaria.repository;
 
-import com.gabriel.portaria.model.StatusVeiculo;
+import com.gabriel.portaria.enums.StatusVeiculo;
 import com.gabriel.portaria.model.Veiculo;
 
 import java.util.List;

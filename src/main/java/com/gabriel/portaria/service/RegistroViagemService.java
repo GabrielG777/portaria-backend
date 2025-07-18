@@ -1,11 +1,11 @@
 package com.gabriel.portaria.service;
 
 import com.gabriel.portaria.model.RegistroViagem;
-import com.gabriel.portaria.model.StatusVeiculo;
 import com.gabriel.portaria.model.Veiculo;
 import com.gabriel.portaria.dto.RetornoVeiculoDTO;
 import com.gabriel.portaria.dto.SaidaVeiculoDTO;
 import com.gabriel.portaria.dto.ViagemDetalhadaDTO;
+import com.gabriel.portaria.enums.StatusVeiculo;
 import com.gabriel.portaria.model.Funcionario;
 import com.gabriel.portaria.repository.FuncionarioRepository;
 import com.gabriel.portaria.repository.RegistroViagemRepository;

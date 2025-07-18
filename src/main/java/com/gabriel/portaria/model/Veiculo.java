@@ -3,6 +3,8 @@
 
 package com.gabriel.portaria.model;
 
+import com.gabriel.portaria.enums.StatusVeiculo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
