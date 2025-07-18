@@ -15,6 +15,8 @@ import com.gabriel.portaria.dto.ViagemDetalhadaDTO;
 
 @RestController
 @RequestMapping("/registro")
+@CrossOrigin(origins = "*")
+
 public class RegistroViagemController {
 
     @Autowired

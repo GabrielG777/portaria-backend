@@ -5,10 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
-import com.gabriel.portaria.model.Funcionario;
-import com.gabriel.portaria.repository.FuncionarioRepository;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gabriel.portaria.dto.ErroResponse;
+import com.gabriel.portaria.model.Funcionario;
+import com.gabriel.portaria.repository.FuncionarioRepository;
 
 @RestController
 @RequestMapping("/funcionarios") // nome da minha classe, http//:localhost/funcionarios
+@CrossOrigin(origins = "*")
 
 public class FuncionarioController {
 
