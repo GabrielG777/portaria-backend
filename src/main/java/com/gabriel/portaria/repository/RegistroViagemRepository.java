@@ -11,12 +11,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface RegistroViagemRepository extends JpaRepository<RegistroViagem, Long> {
+
     @Query("SELECT new com.gabriel.portaria.dto.ViagemDetalhadaDTO(" +
-            "rv.id, v.placa, f.nome, rv.destino, rv.dataSaida, rv.dataRetorno) " +
-            "FROM RegistroViagem rv " +
-            "JOIN rv.veiculo v " +
-            "JOIN rv.motorista f")
-    List<ViagemDetalhadaDTO> findAllDetalhado();
+            "v.id, veiculo.placa, motorista.nome, v.destino, v.dataSaida, v.dataRetorno) " +
+            "FROM RegistroViagem v " +
+            "JOIN v.veiculo veiculo " +
+            "JOIN v.motorista motorista " +
+            "ORDER BY v.dataSaida DESC")
+    List<ViagemDetalhadaDTO> buscarHistorico();
 
     Optional<RegistroViagem> findTopByVeiculoOrderByDataSaidaDesc(Veiculo veiculo);
 

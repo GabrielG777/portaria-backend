@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gabriel.portaria.dto.ErroResponse;
@@ -29,14 +30,22 @@ public class VeiculoController {
 
     @GetMapping("/teste")
     public String teste() {
-        System.out.println(">>> chegou no /veiculos/teste");
+        System.out.println(">>> chegou aquiiii /veiculos/teste");
         return "rota funcionando";
     }
 
     @GetMapping
-    public List<Veiculo> lestarCarros() {
-        return veiculoRepository.findAll();
+    public ResponseEntity<List<Veiculo>> listarPorStatus(@RequestParam(required = false) StatusVeiculo status) {
+        if (status == null) {
+            return ResponseEntity.ok(veiculoRepository.findAll());
+        }
+        return ResponseEntity.ok(veiculoRepository.findByStatus(status));
     }
+
+    // @GetMapping
+    // public List<Veiculo> lestarCarros() {
+    //     return veiculoRepository.findAll();
+    // }
 
     @GetMapping("/placa/{placa}") // http://localhost:8080/veiculos/placa/
     public ResponseEntity<?> buscarPlaca(@PathVariable String placa) {
@@ -97,9 +106,8 @@ public class VeiculoController {
         }).orElse(ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado")));
     }
 
-
     @DeleteMapping("deletar/{id}")
-    public ResponseEntity<?> deletarCarro(@PathVariable Long id){
+    public ResponseEntity<?> deletarCarro(@PathVariable Long id) {
         if (!veiculoRepository.existsById(id)) {
             return ResponseEntity.status(404).body(new ErroResponse("Veículo não encontrado"));
         }

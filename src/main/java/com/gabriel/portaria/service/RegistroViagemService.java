@@ -32,7 +32,7 @@ public class RegistroViagemService {
     private FuncionarioRepository funcionarioRepository;
 
     public List<ViagemDetalhadaDTO> listarFullViagens() {
-        return registroViagemRepository.findAllDetalhado();
+        return registroViagemRepository.buscarHistorico();
     }
 
     public void registrarRetorno(RetornoVeiculoDTO dto) {
